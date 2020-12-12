@@ -46,6 +46,18 @@ public class MybatisPlusDemoApplicationTests {
     }
 
     @Test
+    public void testUpdate() {
+        User user = new User();
+        user.setId(6L).setName("tom").setAge(20).setEmail("tom@163.com");
+        // 手动添加数据
+        if (userMapper.updateById(user)>0) {
+            userMapper.selectList(null).forEach(System.out::println);
+        } else {
+            System.out.println("添加数据失败");
+        }
+    }
+
+    @Test
     public void testGenerator() {
         // Step1：代码生成器
         AutoGenerator mpg = new AutoGenerator();
