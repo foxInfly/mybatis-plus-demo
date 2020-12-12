@@ -26,11 +26,22 @@ public class MybatisPlusDemoApplicationTests {
     private UserMapper userMapper;
 
     @Test
-    public void contextLoads() {
+    public void testSelectList() {
         System.out.println(("----- selectAll method test ------"));
         List<User> userList = userMapper.selectList(null);
         for (User user : userList) {
             System.out.println(user);
+        }
+    }
+    @Test
+    public void testSave() {
+        User user = new User();
+        user.setName("tom").setAge(20).setEmail("tom@163.com");
+        // 手动添加数据
+        if (userMapper.insert(user)>0) {
+            userMapper.selectList(null).forEach(System.out::println);
+        } else {
+            System.out.println("添加数据失败");
         }
     }
 

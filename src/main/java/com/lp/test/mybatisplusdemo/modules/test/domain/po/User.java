@@ -15,6 +15,9 @@ import java.util.Date;
 @TableName(value = "user")
 public class User {
     /**
+     * 常用属性：
+     *         value           用于定义主键字段名
+     *         type            用于定义主键类型（主键策略 IdType）
      * 主键策略：
      *       IdType.AUTO          主键自增，系统分配，不需要手动输入
      *       IdType.NONE          未设置主键
@@ -45,7 +48,10 @@ public class User {
      *         delval           用于定义删除时字段的值
      */
     @TableLogic (value = "0",delval = "1")
+    @TableField(value = "is_del",exist = true,fill = FieldFill.INSERT)
     private String isDel;
     @TableField(value = "create_date",exist = true,fill = FieldFill.INSERT)
     private Date createDate;
+    @TableField(value = "update_date",exist = true,fill = FieldFill.INSERT_UPDATE)
+    private Date updateDate;
 }
