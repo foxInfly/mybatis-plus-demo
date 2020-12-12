@@ -1,6 +1,7 @@
 package com.lp.test.mybatisplusdemo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
@@ -9,7 +10,7 @@ import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.lp.test.mybatisplusdemo.modules.test.domain.po.User;
-import com.lp.test.mybatisplusdemo.modules.test.service.mapper.UserMapper;
+import com.lp.test.mybatisplusdemo.modules.test.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,17 +19,20 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.annotation.Resource;
 import java.util.List;
 
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class MybatisPlusDemoApplicationTests {
 
+//    @Resource
+//    private UserMapper userMapper;
     @Resource
-    private UserMapper userMapper;
+    private UserService userService;
 
     @Test
     public void testSelectList() {
         System.out.println(("----- selectAll method test ------"));
-        List<User> userList = userMapper.selectList(null);
+        List<User> userList = userService.list();
         for (User user : userList) {
             System.out.println(user);
         }
@@ -38,8 +42,8 @@ public class MybatisPlusDemoApplicationTests {
         User user = new User();
         user.setName("tom").setAge(20).setEmail("tom@163.com");
         // 手动添加数据
-        if (userMapper.insert(user)>0) {
-            userMapper.selectList(null).forEach(System.out::println);
+        if (userService.save(user)) {
+            userService.list().forEach(System.out::println);
         } else {
             System.out.println("添加数据失败");
         }
@@ -50,8 +54,8 @@ public class MybatisPlusDemoApplicationTests {
         User user = new User();
         user.setId(6L).setName("tom").setAge(20).setEmail("tom@163.com");
         // 手动添加数据
-        if (userMapper.updateById(user)>0) {
-            userMapper.selectList(null).forEach(System.out::println);
+        if (userService.updateById(user)) {
+            userService.list().forEach(System.out::println);
         } else {
             System.out.println("添加数据失败");
         }
@@ -61,11 +65,28 @@ public class MybatisPlusDemoApplicationTests {
     public void tesDel() {
         User user = new User();
         // 手动添加数据
-        if (userMapper.deleteById(6L)>0) {
-            userMapper.selectList(null).forEach(System.out::println);
+        if (userService.removeById(6L)) {
+            userService.list().forEach(System.out::println);
         } else {
             System.out.println("添加数据失败");
         }
+    }
+
+    @Test
+    public void testPage() {
+        // Step1：创建一个 Page 对象
+        Page<User> page = new Page<>();
+        // Page<User> page = new Page<>(2, 5);
+        // Step2：调用 mybatis-plus 提供的分页查询方法
+        userService.page(page, null);
+        // Step3：获取分页数据
+        System.out.println(page.getCurrent()); // 获取当前页
+        System.out.println(page.getTotal()); // 获取总记录数
+        System.out.println(page.getSize()); // 获取每页的条数
+        System.out.println(page.getRecords()); // 获取每页数据的集合
+        System.out.println(page.getPages()); // 获取总页数
+        System.out.println(page.hasNext()); // 是否存在下一页
+        System.out.println(page.hasPrevious()); // 是否存在上一页
     }
 
     @Test

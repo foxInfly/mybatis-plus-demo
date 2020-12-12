@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**Po要和数据库的表名完全一致，驼峰对应_
@@ -13,7 +14,8 @@ import java.util.Date;
 @Data
 @Accessors(chain = true)
 @TableName(value = "user")
-public class User {
+public class User  implements Serializable {
+    private static final long serialVersionUID = 329566608361812363L;
     /**
      * 常用属性：
      *         value           用于定义主键字段名
@@ -47,7 +49,7 @@ public class User {
      *         value            用于定义未删除时字段的值
      *         delval           用于定义删除时字段的值
      */
-    @TableLogic (value = "0",delval = "1")
+    @TableLogic (value = "0",delval = "1")//去除这个注解则是物理删除
     @TableField(value = "is_del",fill = FieldFill.INSERT)
     private String isDel;
     @TableField(value = "create_date",fill = FieldFill.INSERT)
