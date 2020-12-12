@@ -5,3 +5,6 @@ spring:
     url: jdbc:mysql://114.55.95.30:3306/test-01?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull
     username: root
     password: 123456
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #查看执行的SQL
