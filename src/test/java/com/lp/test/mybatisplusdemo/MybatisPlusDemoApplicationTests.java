@@ -58,6 +58,17 @@ public class MybatisPlusDemoApplicationTests {
     }
 
     @Test
+    public void tesDel() {
+        User user = new User();
+        // 手动添加数据
+        if (userMapper.deleteById(6L)>0) {
+            userMapper.selectList(null).forEach(System.out::println);
+        } else {
+            System.out.println("添加数据失败");
+        }
+    }
+
+    @Test
     public void testGenerator() {
         // Step1：代码生成器
         AutoGenerator mpg = new AutoGenerator();
