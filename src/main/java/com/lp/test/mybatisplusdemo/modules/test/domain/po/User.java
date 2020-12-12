@@ -29,8 +29,8 @@ public class User {
     private Long id;
     /**
      * 常用属性：
-     *         value                用于定义非主键字段名
-     *         exist                用于指明是否为数据表的字段， true 表示是，false 为不是。
+     *         value                用于定义非主键字段名（默认驼峰替换）
+     *         exist                用于指明是否为数据表的字段， true 表示是（默认），false 为不是。
      *         fill                 用于指定字段填充策略（FieldFill）。
      * 字段填充策略：（一般用于填充 创建时间、修改时间等字段）
      *         FieldFill.DEFAULT         默认不填充
@@ -38,7 +38,7 @@ public class User {
      *         FieldFill.UPDATE          更新时填充
      *         FieldFill.INSERT_UPDATE   插入、更新时填充。
      **/
-    @TableField(value = "name",exist = true,fill = FieldFill.DEFAULT)
+    @TableField(value = "name",fill = FieldFill.DEFAULT)
     private String name;
     private int age;
     private String email;
@@ -48,10 +48,13 @@ public class User {
      *         delval           用于定义删除时字段的值
      */
     @TableLogic (value = "0",delval = "1")
-    @TableField(value = "is_del",exist = true,fill = FieldFill.INSERT)
+    @TableField(value = "is_del",fill = FieldFill.INSERT)
     private String isDel;
-    @TableField(value = "create_date",exist = true,fill = FieldFill.INSERT)
+    @TableField(value = "create_date",fill = FieldFill.INSERT)
     private Date createDate;
-    @TableField(value = "update_date",exist = true,fill = FieldFill.INSERT_UPDATE)
+    @TableField(value = "update_date",fill = FieldFill.INSERT_UPDATE)
     private Date updateDate;
+
+    @TableField(exist=false)
+    private String ext;
 }
