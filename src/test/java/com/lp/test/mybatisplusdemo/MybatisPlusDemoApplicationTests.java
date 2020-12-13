@@ -73,6 +73,21 @@ public class MybatisPlusDemoApplicationTests {
     }
 
     @Test
+    public void tesVersion() {
+        User user = new User()
+                .setName("tom")
+                .setAge(20)
+                .setEmail("lp@163.com");
+        userService.save(user);
+        userService.list().forEach(System.out::println);
+        System.out.println("================");
+
+        user.setName("lily");
+        userService.update(user, null);
+        userService.list().forEach(System.out::println);
+    }
+
+    @Test
     public void testPage() {
         // Step1：创建一个 Page 对象
         Page<User> page = new Page<>();

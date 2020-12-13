@@ -57,6 +57,13 @@ public class User  implements Serializable {
     @TableField(value = "update_date",fill = FieldFill.INSERT_UPDATE)
     private Date updateDate;
 
+    /**
+     * 版本号（用于乐观锁， 默认为 1）
+     */
+    @Version
+    @TableField(fill = FieldFill.INSERT)
+    private Integer version;
+
     @TableField(exist=false)
     private String ext;
 }

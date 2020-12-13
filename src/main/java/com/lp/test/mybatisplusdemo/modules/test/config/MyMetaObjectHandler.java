@@ -7,7 +7,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-/**mybtais自定义填充的内容
+/**
+ * mybtais自定义填充的内容
+ *
  * @author lp
  * @since 2020-12-12 16:07:20
  */
@@ -19,6 +21,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         this.strictInsertFill(metaObject, "createDate", Date.class, new Date());
         this.strictInsertFill(metaObject, "updateDate", Date.class, new Date());
         this.strictInsertFill(metaObject, "isDel", String.class, IsDelete.NO.getCode());
+        this.strictInsertFill(metaObject, "version", Integer.class, 1);
     }
 
     @Override
