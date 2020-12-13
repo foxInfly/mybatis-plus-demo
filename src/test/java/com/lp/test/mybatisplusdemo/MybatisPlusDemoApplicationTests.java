@@ -1,6 +1,7 @@
 package com.lp.test.mybatisplusdemo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
@@ -81,7 +82,6 @@ public class MybatisPlusDemoApplicationTests {
         userService.save(user);
         userService.list().forEach(System.out::println);
         System.out.println("================");
-
         user.setName("lily");
         userService.update(user, null);
         userService.list().forEach(System.out::println);
@@ -102,6 +102,58 @@ public class MybatisPlusDemoApplicationTests {
         System.out.println(page.getPages()); // 获取总页数
         System.out.println(page.hasNext()); // 是否存在下一页
         System.out.println(page.hasPrevious()); // 是否存在上一页
+    }
+
+    /**
+     * Wrapper  条件构造抽象类
+     *     -- AbstractWrapper 查询条件封装，用于生成 sql 中的 where 语句。
+     *         -- QueryWrapper Entity 对象封装操作类，用于查询。
+     *         -- UpdateWrapper Update 条件封装操作类，用于更新。
+     *     -- AbstractLambdaWrapper 使用 Lambda 表达式封装 wrapper
+     *         -- LambdaQueryWrapper 使用 Lambda 语法封装条件，用于查询。
+     *         -- LambdaUpdateWrapper 使用 Lambda 语法封装条件，用于更新。
+     * 【QueryWrapper 条件：】
+     *     select(String... sqlSelect); // 用于定义需要返回的字段。例： select("id", "name", "age") ---> select id, name, age
+     *     select(Predicate<TableFieldInfo> predicate); // Lambda 表达式，过滤需要的字段。
+     *     lambda(); // 返回一个 LambdaQueryWrapper
+     *
+     * 【UpdateWrapper 条件：】
+     *     set(String column, Object val); // 用于设置 set 字段值。例: set("name", null) ---> set name = null
+     *     etSql(String sql); // 用于设置 set 字段值。例: setSql("name = '老李头'") ---> set name = '老李头'
+     *     lambda(); // 返回一个 LambdaUpdateWrapper
+     */
+    @Test
+    public void testQueryWrapper() {
+        // Step1：创建一个 QueryWrapper 对象,拼装SQL
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+
+        // Step2： 构造查询条件
+        //eq、ne、gt、ge、lt、le
+        //between、notBetween、in、notIn、inSql、notInSql
+        //like、notLike、likeLeft、likeRight
+        //isNull、isNotNull
+        //groupBy、orderByAsc、orderByDesc、having
+        //or、or、and、nested、apply、last、exists
+        String a = "";
+        queryWrapper
+                .select("id", "name", "age")
+//                .eq("age", 20)
+//                .ne("age", 20)
+//                .gt("age", 20)
+//                .ge("age", 20)
+//                .lt("age", 20)
+//                .le("age", 20)
+//                .between("age", 19,22)//va1< col <=v2,前开后闭
+//                .in("age", 19,22)
+                .inSql("age","select age from user where age > "+a)
+                .like("name", "j")
+                .groupBy("id","name","age")
+                .orderByDesc("age");
+
+        // Step3：执行查询
+        userService
+                .list(queryWrapper)
+                .forEach(System.out::println);
     }
 
     @Test
