@@ -13,7 +13,7 @@ import java.util.List;
  * @author lp
  * @since 2020/12/13 16:55
  **/
-public class ExcalDownloadUtil {
+public class ExportExcalUtil {
     public static HSSFWorkbook creatSheet(HSSFWorkbook wb, List<TodayCount> todayCount){
         //0.建立新的sheet对象（excel的表单xls）
         HSSFSheet sheet = wb.createSheet();

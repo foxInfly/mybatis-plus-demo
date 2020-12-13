@@ -2,7 +2,7 @@ package com.lp.test.mybatisplusdemo.poi.controller;
 
 import com.lp.test.mybatisplusdemo.poi.domain.po.TodayCount;
 import com.lp.test.mybatisplusdemo.poi.service.TodayCountService;
-import com.lp.test.mybatisplusdemo.poi.util.ExcalDownloadUtil;
+import com.lp.test.mybatisplusdemo.poi.util.ExportExcalUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
@@ -98,7 +98,7 @@ public class POIController {
      **/
     private void creatSheet(HSSFWorkbook wb, Integer typeNumber){
         List<TodayCount> todayCount = todayCountService.list();
-        HSSFWorkbook sheets = ExcalDownloadUtil.creatSheet(wb, todayCount);
+        HSSFWorkbook sheets = ExportExcalUtil.creatSheet(wb, todayCount);
     }
 
 
