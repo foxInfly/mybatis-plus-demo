@@ -12,8 +12,6 @@ import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.lp.test.mybatisplusdemo.modules.test.domain.po.User;
 import com.lp.test.mybatisplusdemo.modules.test.service.UserService;
-import com.lp.test.mybatisplusdemo.poi.domain.po.TodayCount;
-import com.lp.test.mybatisplusdemo.poi.service.TodayCountService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,14 +23,12 @@ import java.util.List;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class MybatisPlusDemoApplicationTests {
+public class PoiDemoApplicationTests {
 
 //    @Resource
 //    private UserMapper userMapper;
     @Resource
     private UserService userService;
-    @Resource
-    private TodayCountService todayCountService;
 
     @Test
     public void testSelectList() {
@@ -158,14 +154,6 @@ public class MybatisPlusDemoApplicationTests {
         userService
                 .list(queryWrapper)
                 .forEach(System.out::println);
-    }
-
-    @Test
-    public void testTodaySelectList() {
-        List<TodayCount> todayCounts = todayCountService.list();
-        for (TodayCount user : todayCounts) {
-            System.out.println(user);
-        }
     }
 
     @Test
