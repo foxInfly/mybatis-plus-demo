@@ -35,6 +35,15 @@ public class MybatisPlusDemoApplicationTests {
     private TodayCountService todayCountService;
 
     @Test
+    public void testgetOne() {
+        System.out.println(("----- getOne method test ------"));
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<User> id = queryWrapper.eq("id", 13);
+        User user = userService.getOne(queryWrapper);
+            System.out.println(user);
+    }
+
+    @Test
     public void testSelectList() {
         System.out.println(("----- selectAll method test ------"));
         List<User> userList = userService.list();
@@ -138,7 +147,7 @@ public class MybatisPlusDemoApplicationTests {
         //isNull、isNotNull
         //groupBy、orderByAsc、orderByDesc、having
         //or、or、and、nested、apply、last、exists
-        String a = "";
+        String a = "2";
         queryWrapper
                 .select("id", "name", "age")
 //                .eq("age", 20)
