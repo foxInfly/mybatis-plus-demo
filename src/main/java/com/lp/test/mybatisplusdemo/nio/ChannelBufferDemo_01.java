@@ -1,8 +1,6 @@
 package com.lp.test.mybatisplusdemo.nio;
 
-import java.io.File;
 import java.io.RandomAccessFile;
-import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
@@ -10,7 +8,7 @@ import java.nio.channels.FileChannel;
  * @author lp
  * @since 2020-12-21 21:23:58
  */
-public class Test1 {
+public class ChannelBufferDemo_01 {
     public static void main(String[] args) throws Exception {
 //        RandomAccessFile aFile = new RandomAccessFile("G:\\project\\Idea\\demo\\mybatis-plus-demo\\src\\main\\java\\com\\lp\\test\\mybatisplusdemo\\nio\\data\\nio-data.txt", "rw");
         RandomAccessFile aFile = new RandomAccessFile("src/main/resources/nio-data.txt", "rw");
