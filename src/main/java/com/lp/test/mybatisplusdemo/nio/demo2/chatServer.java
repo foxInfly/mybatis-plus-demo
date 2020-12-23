@@ -37,6 +37,9 @@ public class chatServer {
             selector = Selector.open();
             serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);   //ssc注册到selector准备连接，关心1：serverSocketChannel的ACCEPT事件就绪状态
             System.out.println("ChatServer started ......,listen port:" + port);
+            System.out.println("===================================================================================");
+            System.out.println("                                lp聊天室");
+            System.out.println("===================================================================================");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -57,7 +60,7 @@ public class chatServer {
                     }
                 }
 
-                if (events < 0 || user_msg == "88888888888") return;
+                if (events < 0 || (user_msg!=null && user_msg.equals("wwwww"))) return;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -69,16 +72,17 @@ public class chatServer {
         SocketChannel clientChannel = serverSocketChannel.accept();
         clientChannel.configureBlocking(false);
         clientChannel.register(selector, SelectionKey.OP_READ);//关心2：clientChannel的READ事件就绪状态
-        System.out.println("a new client connected " + clientChannel.getLocalAddress());
+        System.out.println("a new client connected ：" + clientChannel.getLocalAddress());
+
     }
 
     private void read(SelectionKey key) throws IOException {
-        SocketChannel socketChannel = (SocketChannel) key.channel();
+        SocketChannel socketChannel = (SocketChannel) key.channel();//客户端连进来的socketChannel
         this.readBuffer.clear();//清除缓冲区，准备接受新数据
 
         int numRead;
         try {
-            numRead = socketChannel.read(this.readBuffer);//总长度
+            numRead = socketChannel.read(this.readBuffer);//将channel的数据读取到buffer，并返回总长度
         } catch (IOException e) {    // 客户端断开连接，这里会报错提示远程主机强迫关闭了一个现有的连接。
             offlineUser(key);
             key.cancel();
@@ -86,19 +90,22 @@ public class chatServer {
             return;
         }
         user_msg = new String(readBuffer.array(), 0, numRead);
-        for (String s : users) System.out.println("在线用户: " + s);
+
 
         if (user_msg.contains(USER_NAME_TAG)) {   // 用户第一次登陆， 输入登录名
             String user_name = user_msg.replace(USER_NAME_TAG, "");
+
+            users.add(user_name);   // 用户名
+            System.out.println("当前在线用户数: " + this.users.size());
+            for (String s : users) System.out.println("在线用户: " + s);
             user_msg = "欢迎: " + user_name + " 登录聊天室";
             System.out.println(user_msg);
-            users.add(user_name);   // 用户名
             brodcast(socketChannel, user_msg);
         } else if (user_msg.equals("1")) {       // 显示在线人数
             user_msg = onlineUser();
             write(socketChannel, user_msg);
         } else {                                // 群聊
-            String MspPre = "";
+            String message = "";
             boolean flag = false;
             String[] s1 = user_msg.split("###");
             for (String s : users) {
@@ -106,10 +113,11 @@ public class chatServer {
             }
 
             if (flag) {
-                MspPre = s1[0] + ": ";
-                brodcast(socketChannel, MspPre + s1[1]);
+                message = s1[0] + ": "+s1[1];
+                System.out.println(message);
+                brodcast(socketChannel, message);
             }else {
-                brodcast(socketChannel, MspPre + "不是注册用户");
+                brodcast(socketChannel,  s1[0]  + ": 不是注册用户");
             }
 
         }
