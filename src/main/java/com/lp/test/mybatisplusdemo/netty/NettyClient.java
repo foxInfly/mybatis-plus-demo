@@ -1,12 +1,12 @@
 package com.lp.test.mybatisplusdemo.netty;
 
+import com.lp.test.mybatisplusdemo.netty.protocol.ClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import javafx.beans.Observable;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -24,7 +24,9 @@ public class NettyClient {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     public void initChannel(SocketChannel ch) {
-                        ch.pipeline().addLast(new FirstClientHandler());
+//                        ch.pipeline().addLast(new FirstClientHandler());
+
+                        ch.pipeline().addLast(new ClientHandler());
                     }
                 });
         // 4.建立连接

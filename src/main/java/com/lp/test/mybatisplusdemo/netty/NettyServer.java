@@ -1,5 +1,6 @@
 package com.lp.test.mybatisplusdemo.netty;
 
+import com.lp.test.mybatisplusdemo.netty.protocol.ServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -25,7 +26,8 @@ public class NettyServer {
                 // 实际使用中为了规范起见，一般会再写一个单独的类也就是初始化器，在里面写上需要的操作。就如Netty实战那篇中的代码一样。
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     protected void initChannel(NioSocketChannel ch) {
-                        ch.pipeline().addLast(new FirstServerHandler());
+//                        ch.pipeline().addLast(new FirstServerHandler());
+                        ch.pipeline().addLast(new ServerHandler());
                     }
                 })
                 .handler(new ChannelInitializer<NioServerSocketChannel>() {
