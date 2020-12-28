@@ -21,8 +21,8 @@ import javax.annotation.Resource;
 import java.util.List;
 
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
+//@SpringBootTest
+//@RunWith(SpringRunner.class)
 public class PoiDemoApplicationTests {
 
 //    @Resource
